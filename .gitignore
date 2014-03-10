@@ -7,7 +7,7 @@ lib-cov
 *.pid
 *.gz
 .idea
-.idea/*
+src/.idea
 
 pids
 logs
@@ -15,3 +15,5 @@ results
 
 npm-debug.log
 node_modules
+
+src/static/semantic
