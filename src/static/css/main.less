@@ -1,4 +1,17 @@
-#reports{
+.main{
+  margin: 100px auto 0 auto;
+  width: 600px;
+}
+
+#logs, #reports{
+  display: none;
+}
+
+#browsers{
+  margin-top: 20px;
+}
+
+#logs{
   .pass{
     color: #008000;
   }
@@ -15,4 +28,21 @@
   .debug, .info, .error{
     color: #808080;
   }
+}
+
+#reports{
+  .controls{
+    overflow: hidden;
+    >h2{
+      float: left
+    }
+    >div{
+      margin-top: 10px;
+      float: right
+    }
+  }
+}
+
+#mainForm{
+
 }
