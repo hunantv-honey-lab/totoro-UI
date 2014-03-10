@@ -54,19 +54,22 @@ newTaskAPI = (socket)->
   socket.on 'newTask', (data)->
     _proxy.newTask data,
       #处理返回的报告
-      onReport: (report)->
-        socket.emit 'onTaskReport', report
+      onReport: (reports)->
+        socket.emit 'onTaskReport', reports
       #处理ProxyReq
       onProxyReq: (info)->
         socket.emit 'onProxyReq', info
 
 module.exports = (app, io)->
   #处理socket相关
-  _io.sockets.on 'connection', (socket)->
-  ['browsers'].forEach (action)->
-    socket.on action, (data)->
-      _proxy[action].call null, data, (err, response)->
-        socket.emit action, response
+  io.sockets.on 'connection', (socket)->
+    #创建新任务
+    newTaskAPI(socket)
+    #其它的一般性任务
+    ['browsers'].forEach (action)->
+      socket.on action, (data)->
+        _proxy[action].call null, data, (err, response)->
+          socket.emit action, response
 
   #预定义less和coffee
   _mime.define
