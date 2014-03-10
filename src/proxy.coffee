@@ -2,8 +2,8 @@
 _http = require 'http'
 _utils = require './utils'
 _strformat = require 'strformat'
-_io = require 'socket.io-client'
 _utils = require './utils'
+_io = require 'socket.io-client'
 
 #读取浏览器列表
 exports.browsers = (data, callback)->
@@ -32,9 +32,13 @@ exports.allTasks = (res, req, next)->
   @param {object} options - 选项，包括处理socket返回的数据
 ###
 exports.newTask = (data, options)->
-  socket = _io.connect _utils.server_url('order');
+  #强制一个新链接
+  opt_socket = 'force new connection': true, reconnect: false
+  #创建一个socket
+  socket = _io.connect _utils.server_url('order'), opt_socket;
   #连接服务器
   socket.on 'connect', ()->
+    console.error('test connect')
     config =
       runner: data.runner,
       catch: true,
