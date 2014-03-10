@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>totoro-UI</title>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <link rel="stylesheet" href="/css/main.less">
+  <link rel="stylesheet" href="/css/normalize.css">
+  <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+  <script src="/js/handlebars.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/main.coffee"></script>
+  <script id="template-browsers" type="text/x-handlebars-template">
+    <h2>可用浏览器列表</h2>
+    <ul>
+      {{#each .}}
+      <li>
+        <h3>{{@key}}</h3>
+        <ul>
+          {{#each .}}
+          <li><label><input type="checkbox" /> {{@key}}</label></li>
+          {{/each}}
+        </ul>
+      </li>
+      {{/each}}
+    </ul>
+  </script>
+</head>
+<body>
+
+<form id="mainForm">
+<div>
+  <input type="text" id="txtRunner" placeholder="请输入将要测试的地址" /><button id="btnTest" type="submit">Test</button>
+</div>
+
+<div id="browsers">
+
+</div>
+</form>
+</body>
+</html>

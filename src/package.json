@@ -1,0 +1,14 @@
+{
+    "name": "totoro-UI",
+    "version": "0.0.1",
+    "dependencies": {
+      "express": "*",
+      "underscore": "*",
+      "strformat": "",
+      "coffee-script": "",
+      "less": "*",
+      "socket.io-client": "*",
+      "socket.io": "*",
+      "mime": "*"
+    }
+}
