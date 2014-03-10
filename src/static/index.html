@@ -3,38 +3,112 @@
 <head>
   <title>totoro-UI</title>
   <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/semantic/css/semantic.css">
   <link rel="stylesheet" href="/css/main.less">
-  <link rel="stylesheet" href="/css/normalize.css">
   <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+  <script src="/semantic/javascript/semantic.js"></script>
   <script src="/js/handlebars.js"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script src="/js/main.coffee"></script>
+
+  <!--浏览器列表的模板-->
   <script id="template-browsers" type="text/x-handlebars-template">
-    <h2>可用浏览器列表</h2>
-    <ul>
+    <h4 class="ui header">可用测试浏览器</h4>
+    <div class="ui bulleted list">
       {{#each .}}
-      <li>
-        <h3>{{@key}}</h3>
-        <ul>
+      <div class="item">
+        {{@key}}
+        <div class="list">
           {{#each .}}
-          <li><label><input type="checkbox" /> {{@key}}</label></li>
+          <div class="item"><label><!--<input type="checkbox" />--> {{@key}}</label></div>
           {{/each}}
-        </ul>
-      </li>
+        </div>
+      </div>
       {{/each}}
+    </div>
+  </script>
+
+  <script id="template-reports" type="text/x-handlebars-template">
+    {{#each .}}
+    <div>
+      <header>
+        <h3>{{@key}}的测试报告<span class="ua">UA: {{ua}}</span></h3>
+      </header>
+    </div>
+    <!--自定义错误报告-->
+    <header>自定义错误报告</header>
+    <section>
+      <ul>
+        <!--显示详细的错误信息-->
+        {{#each customLogs}}
+        <li>{{.}}</li>
+        {{/each}}
+      </ul>
+    </section>
+
+    <!--统计信息-->
+    <h3>统计信息</h3>
+    <table>
+      <tr>
+        <th>用时(毫秒)</th>
+        <th>Suites/Tests</th>
+        <th>失败</th>
+      </tr>
+      <tr>
+        <td>{{stats.duration}}</td>
+        <td>{{stats.suites}}/{{stats.tests}}</td>
+        <td>{{stats.failures}}</td>
+      </tr>
+    </table>
+
+    <!--详细错误-->
+    <h3>详细错误</h3>
+    <ul>
+    {{#each failures}}
+      <li>
+        <div><span>Parent: {{parent}}</span><span>Title: {{title}}</span></div>
+        <div>{{message}}</div>
+      </li>
+    {{/each}}
     </ul>
+    {{/each}}
   </script>
 </head>
 <body>
 
-<form id="mainForm">
-<div>
-  <input type="text" id="txtRunner" placeholder="请输入将要测试的地址" /><button id="btnTest" type="submit">Test</button>
-</div>
+<div class="main">
+  <h4 class="ui inverted blue block header">
+    欢迎使用totoro-UI
+  </h4>
 
-<div id="browsers">
+  <form id="mainForm" class="ui form segment">
+    <div class="ui ignored positive icon message">
+      请输入您将要测试的地址，并确保此地址能通过http访问。
+    </div>
+    <div class="ui fluid action input" id="divInput">
+      <input type="text" placeholder="例如：http://127.0.0.1/test-case.html" id="txtRunner" value="http://localhost:3000/runner.html">
+      <div class="ui button" id="btnTest">Test</div>
+    </div>
+    <div id="browsers"></div>
+  </form>
 
+  <div id="logs" class="segment ui">
+    <div class="bulleted list details">
+    </div>
+    <div class="status"></div>
+  </div>
+
+  <div id="reports" class="segment ui">
+    <div class="controls">
+      <h2>统计报告</h2>
+      <div class="ui buttons">
+        <div class="ui button">返回</div>
+        <div class="or"></div>
+        <div class="ui positive button">重新测试</div>
+      </div>
+    </div>
+    <div class="details"></div>
+  </div>
 </div>
-</form>
 </body>
 </html>
