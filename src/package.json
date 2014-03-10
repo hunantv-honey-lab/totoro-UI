@@ -9,6 +9,8 @@
       "less": "*",
       "socket.io-client": "*",
       "socket.io": "*",
-      "mime": "*"
+      "mime": "*",
+      "expect.js": "*",
+      "mocha": "*"
     }
 }
