@@ -73,6 +73,7 @@ module.exports = (app, io)->
 
   #预定义less和coffee
   _mime.define
+    'application/x-font-truetype': ['ttf']
     'text/css': ['less'],
     'application/x-javascript': ['coffee']
 
@@ -81,7 +82,7 @@ module.exports = (app, io)->
     responseStatic req, res, 'static/index.html'
 
   #读取静态文件
-  app.get /(css|js)\/*/i, (req, res, next)->
+  app.get /(css|js|ttf|eot|svg|woff|otf)\/*/i, (req, res, next)->
     responseStatic req, res, _path.join('static', req.url)
 
   #获取可用浏览器列表
