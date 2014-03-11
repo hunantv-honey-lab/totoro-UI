@@ -9,6 +9,7 @@ reportWriter = (report)->
   _ele.reports.fadeIn()
   _ele.logs.hide()
   _ele.mainForm.fadeOut()
+  $('#reports_accordion').accordion()
 
 #写入日志
 logWriter = (log)->
@@ -57,7 +58,9 @@ submitForm = ()->
     _ele.status.empty()
     _ele.logs.fadeIn()
     _ele.logDetails.empty()
+    _ele.reports.fadeOut();
     _ele.mainForm.fadeOut();
+    logWriter action: 'init', info: '准备测试...'
     _socket.emit 'newTask', {runner: runner}
 
 $().ready ()->
@@ -72,3 +75,12 @@ $().ready ()->
     reportDetails: $('#reports>.details')
   getAllBrowsers()
   submitForm()
+
+  #点击返回
+  $('#btnReturn').bind 'click', ()->
+    _ele.reports.fadeOut();
+    _ele.mainForm.fadeIn();
+
+  #点击重新测试
+  $('#btnRetest').bind 'click', ()->
+    $('#btnTest').trigger 'click'
