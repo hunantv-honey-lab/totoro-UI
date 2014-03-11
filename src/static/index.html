@@ -29,49 +29,60 @@
   </script>
 
   <script id="template-reports" type="text/x-handlebars-template">
-    {{#each .}}
-    <div>
-      <header>
-        <h3>{{@key}}的测试报告<span class="ua">UA: {{ua}}</span></h3>
-      </header>
+    <div class="ui fluid accordion" id="reports_accordion">
+      {{#each .}}
+      <div class="title active {{#if stats.failures}}error{{else}}success{{/if}}">
+        <i class="dropdown icon"></i>
+        <span class="browser">{{@key}}</span>
+        <span>：Failed {{stats.failures}} of {{stats.tests}} tests in {{stats.duration}}ms</span>
+        <span class="ua">UA: {{ua}}</span>
+      </div>
+      <div class="content">
+        <!--统计信息-->
+        <h3>统计信息</h3>
+        <table class="ui sortable table segment">
+          <thead>
+          <tr>
+            <th>用时(秒)</th>
+            <th>Suites/Tests</th>
+            <th>失败</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>{{stats.duration}}</td>
+            <td>{{stats.suites}}/{{stats.tests}}</td>
+            <td class="negative">{{stats.failures}}</td>
+          </tr>
+          </tbody>
+        </table>
+
+        <!--自定义错误报告-->
+        <h3>自定义错误报告</h3>
+        <section>
+          <ul>
+            <!--显示详细的错误信息-->
+            {{#each customLogs}}
+            <li>{{.}}</li>
+            {{/each}}
+          </ul>
+        </section>
+
+        <!--详细错误-->
+        <h3>详细错误</h3>
+        <div class="ui divided list failures ordered">
+          {{#each failures}}
+          <div class="item">
+            <div class="content">
+              <a class="header">Title: {{title}}<span class="parent"> at {{parent}}</span></a>
+              <div class="description">{{message}}</div>
+            </div>
+          </div>
+          {{/each}}
+        </div>
+      </div>
+      {{/each}}
     </div>
-    <!--自定义错误报告-->
-    <header>自定义错误报告</header>
-    <section>
-      <ul>
-        <!--显示详细的错误信息-->
-        {{#each customLogs}}
-        <li>{{.}}</li>
-        {{/each}}
-      </ul>
-    </section>
-
-    <!--统计信息-->
-    <h3>统计信息</h3>
-    <table>
-      <tr>
-        <th>用时(毫秒)</th>
-        <th>Suites/Tests</th>
-        <th>失败</th>
-      </tr>
-      <tr>
-        <td>{{stats.duration}}</td>
-        <td>{{stats.suites}}/{{stats.tests}}</td>
-        <td>{{stats.failures}}</td>
-      </tr>
-    </table>
-
-    <!--详细错误-->
-    <h3>详细错误</h3>
-    <ul>
-    {{#each failures}}
-      <li>
-        <div><span>Parent: {{parent}}</span><span>Title: {{title}}</span></div>
-        <div>{{message}}</div>
-      </li>
-    {{/each}}
-    </ul>
-    {{/each}}
   </script>
 </head>
 <body>
@@ -94,6 +105,7 @@
 
   <div id="logs" class="segment ui">
     <div class="bulleted list details">
+
     </div>
     <div class="status"></div>
   </div>
@@ -102,9 +114,9 @@
     <div class="controls">
       <h2>统计报告</h2>
       <div class="ui buttons">
-        <div class="ui button">返回</div>
+        <div class="ui button" id="btnReturn">返回</div>
         <div class="or"></div>
-        <div class="ui positive button">重新测试</div>
+        <div class="ui positive button" id="btnRetest">重新测试</div>
       </div>
     </div>
     <div class="details"></div>
