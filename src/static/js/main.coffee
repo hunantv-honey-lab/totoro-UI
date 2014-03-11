@@ -1,11 +1,33 @@
 _socket = io.connect '/'
 _ele = null
 
+analyzeReport = (item)->
+  #"chrome 35.0.1870.2 / macosx 10.9.2"
+  extra = {};
+  pattern = /(\w+)\s([\d\.]+)\s\/\s(\w+)\s([\d|\.]+)/ig
+  if item.ua.match pattern
+    extra =
+      browser: RegExp.$1
+      browserVersion: RegExp.$2
+      os: RegExp.$3
+      osVersion: RegExp.$4
+
+  #是否通过测试
+  extra.pass = item.stats.failures is 0
+  item.extra = extra
+  item
+
 #写入报告
 reportWriter = (report)->
+  info = {}
+  #拆分ua
+  info[key] = analyzeReport value for key, value of report.info
+
+  console.log info
+
   source = $('#template-reports').html()
   template = Handlebars.compile(source)
-  _ele.reportDetails.html template(report.info)
+  _ele.reportDetails.html template(info)
   _ele.reports.fadeIn()
   _ele.logs.hide()
   _ele.mainForm.fadeOut()

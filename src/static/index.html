@@ -5,7 +5,7 @@
   <meta http-equiv="content-type" content="text/html;charset=utf-8">
   <link rel="stylesheet" type="text/css" href="/semantic/css/semantic.css">
   <link rel="stylesheet" href="/css/main.less">
-  <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+  <script src="/js/jquery.min.js"></script>
   <script src="/semantic/javascript/semantic.js"></script>
   <script src="/js/handlebars.js"></script>
   <script src="/socket.io/socket.io.js"></script>
@@ -30,12 +30,47 @@
 
   <script id="template-reports" type="text/x-handlebars-template">
     <div class="ui fluid accordion" id="reports_accordion">
+      <div class="ui grid title">
+        <div class="five wide column">
+          浏览器
+        </div>
+        <div class="two wide column">
+          通过
+        </div>
+        <div class="two wide column">
+          用时(MS)
+        </div>
+        <div class="two wide column">
+          用例
+        </div>
+        <div class="five wide column">
+          操作系统
+        </div>
+      </div>
       {{#each .}}
       <div class="title active {{#if stats.failures}}error{{else}}success{{/if}}">
-        <i class="dropdown icon"></i>
+        <div class="ui grid">
+          <div class="five wide column">
+            {{extra.browser}} <span class="version">{{extra.browserVersion}}</span>
+          </div>
+          <div class="two wide column pass">
+            ●
+          </div>
+          <div class="two wide column">
+            {{stats.duration}}
+          </div>
+          <div class="two wide column case">
+            {{stats.failures}} of {{stats.tests}}
+          </div>
+          <div class="five wide column">
+            {{extra.os}} <span class="version">{{extra.osVersion}}</span>
+          </div>
+        </div>
+        <!--
         <span class="browser">{{@key}}</span>
         <span>：Failed {{stats.failures}} of {{stats.tests}} tests in {{stats.duration}}ms</span>
         <span class="ua">UA: {{ua}}</span>
+        -->
       </div>
       <div class="content">
         <!--统计信息-->

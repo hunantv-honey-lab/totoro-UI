@@ -54,10 +54,19 @@
 }
 
 #reports_accordion{
-  .error{
+  .pass{
+    font-size: 20px;
+  }
+  .error .pass, .error .case{
     color: red;
   }
-  .success{
+  .success .pass, .success .case{
     color: green;
+  }
+
+  span.version{
+    margin-left: 5px;
+    font-style:  italic;
+    color: #666;
   }
 }
