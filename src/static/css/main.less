@@ -1,6 +1,13 @@
 .main{
-  margin: 100px auto 0 auto;
-  width: 600px;
+  margin: 20px auto 0 auto;
+  width: 800px;
+  position: relative;
+}
+
+#logs, #reports, #mainForm{
+  float: left;
+  position: absolute;
+  width: 100%;
 }
 
 #logs, #reports{
@@ -12,21 +19,9 @@
 }
 
 #logs{
-  .pass{
-    color: #008000;
-  }
-  .pending{
-    color: #00ffff;
-  }
-  .fail{
-    color: #ff0000;
-  }
-  .warn{
-    color: orange;
-  }
-
-  .debug, .info, .error{
-    color: #808080;
+  .item span{
+    word-wrap: break-word;
+    word-break: normal;
   }
 }
 
@@ -43,6 +38,26 @@
   }
 }
 
-#mainForm{
+.failures{
+  a{
+    color: #009FDA;
+    .parent{
+      margin-left: 10px;
+      font-style: italic;
+      color: #CCC;
+      font-weight: normal;
+    }
+  }
+  .item div.description{
+    color: red;
+  }
+}
 
+#reports_accordion{
+  .error{
+    color: red;
+  }
+  .success{
+    color: green;
+  }
 }
