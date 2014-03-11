@@ -2,9 +2,8 @@ _socket = io.connect '/'
 _ele = null
 
 analyzeReport = (item)->
-  #"chrome 35.0.1870.2 / macosx 10.9.2"
   extra = {};
-  pattern = /(\w+)\s([\d\.]+)\s\/\s(\w+)\s([\d|\.]+)/ig
+  pattern = /(\w+)\s([\d\.]+)\s\/\s(\w+)\s(.+)/ig
   if item.ua.match pattern
     extra =
       browser: RegExp.$1
